@@ -19,8 +19,8 @@ import org.jacoco.core.runtime.AgentOptions;
 import org.jacoco.core.runtime.RuntimeData;
 
 /**
- * Output that connects to a TCP port. This controller uses the following
- * agent options:
+ * Output that connects to a TCP port. This controller uses the following agent
+ * options:
  * <ul>
  * <li>address</li>
  * <li>port</li>
@@ -33,6 +33,8 @@ public class TcpClientOutput implements IAgentOutput {
 	private TcpConnection connection;
 
 	private Thread worker;
+
+	private Thread writeTrigger;
 
 	/**
 	 * New controller instance.
@@ -61,6 +63,36 @@ public class TcpClientOutput implements IAgentOutput {
 		worker.setName(getClass().getName());
 		worker.setDaemon(true);
 		worker.start();
+
+		writeTrigger = new Thread(new Runnable() {
+			public void run() {
+				try {
+					int a = 0;
+					while (true) {
+						a++;
+						// connection.writeExecutionData(true);
+						try {
+							// do what you want to do before sleeping
+							Thread.currentThread().sleep(10000);// sleep for
+																// 1000 ms
+							// do what you want to do after sleeptig
+						} catch (final Exception ie) {
+							// If this thread was intrrupted by nother thread
+						}
+						/* connection.writeExecutionData(false); */
+						// if (a == 1) {
+						connection.visitDumpCommand(true, true);
+						// }
+						// connection.close();
+					}
+				} catch (final IOException e) {
+					logger.logExeption(e);
+				}
+			}
+		});
+		writeTrigger.setDaemon(true);
+		writeTrigger.start();
+
 	}
 
 	public void shutdown() throws Exception {
@@ -82,6 +114,8 @@ public class TcpClientOutput implements IAgentOutput {
 	 */
 	protected Socket createSocket(final AgentOptions options)
 			throws IOException {
+		System.out.println("Adress " + options.getAddress());
+		System.out.println("Port " + options.getPort());
 		return new Socket(options.getAddress(), options.getPort());
 	}
 

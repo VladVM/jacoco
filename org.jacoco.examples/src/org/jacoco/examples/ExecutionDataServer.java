@@ -34,7 +34,7 @@ public final class ExecutionDataServer {
 
 	private static final String DESTFILE = "jacoco-server.exec";
 
-	private static final String ADDRESS = "localhost";
+	private static final String ADDRESS = "192.168.1.33";
 
 	private static final int PORT = 6300;
 

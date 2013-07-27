@@ -80,6 +80,7 @@ public class RuntimeData {
 	 */
 	public final void collect(final IExecutionDataVisitor executionDataVisitor,
 			final ISessionInfoVisitor sessionInfoVisitor, final boolean reset) {
+		System.out.println("Really running it...");
 		synchronized (store) {
 			final SessionInfo info = new SessionInfo(sessionId, startTimeStamp,
 					System.currentTimeMillis());
@@ -89,6 +90,7 @@ public class RuntimeData {
 				reset();
 			}
 		}
+		System.out.println("Done collecting");
 	}
 
 	/**

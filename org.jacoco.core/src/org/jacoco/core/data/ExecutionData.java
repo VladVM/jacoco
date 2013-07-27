@@ -43,6 +43,7 @@ public final class ExecutionData {
 		this.id = id;
 		this.name = name;
 		this.probes = probes;
+		System.out.println("Creating execution data for " + name);
 	}
 
 	/**

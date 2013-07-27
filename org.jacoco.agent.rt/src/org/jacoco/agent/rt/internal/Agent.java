@@ -33,6 +33,8 @@ import org.jacoco.core.runtime.AgentOptions;
 import org.jacoco.core.runtime.AgentOptions.OutputMode;
 import org.jacoco.core.runtime.RuntimeData;
 
+import android.os.StrictMode;
+
 /**
  * The agent manages the life cycle of JaCoCo runtime.
  */
@@ -117,11 +119,22 @@ public class Agent implements IAgent {
 	 */
 	public void startup() {
 		try {
+			// disabling strict mode
+			System.out.println("Disabling strict mode");
+
+			final StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+					.permitAll().build();
+
+			StrictMode.setThreadPolicy(policy);
+
+			System.out.println("Creating session ID...");
+
 			String sessionId = options.getSessionId();
 			if (sessionId == null) {
 				sessionId = createSessionId();
 			}
 			data.setSessionId(sessionId);
+			System.out.println("Creating output...");
 			output = createAgentOutput();
 			output.startup(options, data);
 			if (options.getJmx()) {

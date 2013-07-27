@@ -40,6 +40,7 @@ public final class ExecutionDataStore implements IExecutionDataVisitor {
 	 * @see ExecutionData#assertCompatibility(long, String, int)
 	 */
 	public void put(final ExecutionData data) throws IllegalStateException {
+		System.out.println("Adding new execution data item");
 		final Long id = Long.valueOf(data.getId());
 		final ExecutionData entry = entries.get(id);
 		if (entry == null) {
@@ -124,6 +125,7 @@ public final class ExecutionDataStore implements IExecutionDataVisitor {
 	 * execution data objects itself are not removed.
 	 */
 	public void reset() {
+		System.out.println("store: reset");
 		for (final ExecutionData executionData : this.entries.values()) {
 			executionData.reset();
 		}
@@ -135,6 +137,7 @@ public final class ExecutionDataStore implements IExecutionDataVisitor {
 	 * @return current contents
 	 */
 	public Collection<ExecutionData> getContents() {
+		System.out.println("store: getContents");
 		return entries.values();
 	}
 
@@ -145,6 +148,7 @@ public final class ExecutionDataStore implements IExecutionDataVisitor {
 	 *            interface to write content to
 	 */
 	public void accept(final IExecutionDataVisitor visitor) {
+		System.out.println("accepting data");
 		for (final ExecutionData data : entries.values()) {
 			visitor.visitClassExecution(data);
 		}
@@ -153,6 +157,7 @@ public final class ExecutionDataStore implements IExecutionDataVisitor {
 	// === IExecutionDataVisitor ===
 
 	public void visitClassExecution(final ExecutionData data) {
+		System.out.println("Visiting data");
 		put(data);
 	}
 }

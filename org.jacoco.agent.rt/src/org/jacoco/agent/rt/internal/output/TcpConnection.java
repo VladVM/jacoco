@@ -99,6 +99,7 @@ class TcpConnection implements IRemoteCommandVisitor {
 	public void visitDumpCommand(final boolean dump, final boolean reset)
 			throws IOException {
 		if (dump) {
+			System.out.println("running dump collect 3!");
 			data.collect(writer, writer, reset);
 		} else {
 			if (reset) {

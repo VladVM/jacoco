@@ -129,12 +129,12 @@ public final class AgentOptions {
 	 * The IP address or DNS name the tcpserver binds to or the tcpclient
 	 * connects to. Default is defined by {@link #DEFAULT_ADDRESS}.
 	 */
-	public static final String ADDRESS = "address";
+	public static final String ADDRESS = "192.168.1.33";
 
 	/**
 	 * Default value for the "address" agent option.
 	 */
-	public static final String DEFAULT_ADDRESS = null;
+	public static final String DEFAULT_ADDRESS = "192.168.1.33";
 
 	/**
 	 * The port the tcpserver binds to or the tcpclient connects to. In
@@ -142,7 +142,7 @@ public final class AgentOptions {
 	 * JaCoCo agents should run on the same machine, different ports have to be
 	 * specified. Default is defined by {@link #DEFAULT_PORT}.
 	 */
-	public static final String PORT = "port";
+	public static final String PORT = "6300";
 
 	/**
 	 * Default value for the "port" agent option.
@@ -379,7 +379,8 @@ public final class AgentOptions {
 	 * @return port to listen on or connect to
 	 */
 	public int getPort() {
-		return getOption(PORT, DEFAULT_PORT);
+		// return getOption(PORT, DEFAULT_PORT);
+		return 6300;
 	}
 
 	/**
@@ -424,7 +425,8 @@ public final class AgentOptions {
 	 */
 	public OutputMode getOutput() {
 		final String value = options.get(OUTPUT);
-		return value == null ? OutputMode.file : OutputMode.valueOf(value);
+		/* return value == null ? OutputMode.file : OutputMode.valueOf(value); */
+		return OutputMode.tcpclient;
 	}
 
 	/**
